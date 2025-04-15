@@ -1,0 +1,19 @@
+.footer {
+  grid-area: footer;
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 1rem;
+
+  a {
+    margin: 0 0.5rem;
+    text-decoration: underline;
+
+    &:hover {
+      text-decoration: none;
+      cursor: pointer;
+    }
+  }
+}
