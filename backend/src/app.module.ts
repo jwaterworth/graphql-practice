@@ -7,6 +7,8 @@ import { AuthorsModule } from './authors/authors.module';
 import { PostsModule } from './posts/posts.module';
 import { join } from 'path';
 import { Post } from './posts/models/post.model';
+import { Item } from './items/models/item.model';
+import { ItemsModule } from './items/items.module';
 
 @Module({
   imports: [
@@ -18,12 +20,13 @@ import { Post } from './posts/models/post.model';
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: ':memory:', // In-memory database for demo purposes
-      entities: [Author, Post],
+      entities: [Author, Post, Item],
       synchronize: true, // Auto-create database schema (only for development),
       logging: true, // Enable query logging
     }),
     AuthorsModule,
     PostsModule,
+    ItemsModule
   ],
 })
 export class AppModule { }

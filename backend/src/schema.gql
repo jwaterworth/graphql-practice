@@ -17,11 +17,28 @@ type Author {
   posts: [Post!]!
 }
 
+type Item {
+  id: Int!
+  name: String!
+  type: String!
+  done: Int!
+}
+
 type Query {
   author(id: Int!): Author!
+  items: [Item!]!
 }
 
 type Mutation {
   createAuthor(firstName: String!, lastName: String!): Author!
   updateAuthor(id: Int!, firstName: String!, lastName: String!): Author!
+  createItem(createItemsInput: ItemDto!): Item!
+  updateItem(id: Float!, name: String!, type: String!, done: Boolean!): Item!
+  deleteItem(id: Float!): Item!
+}
+
+input ItemDto {
+  name: String!
+  type: String!
+  done: Int!
 }

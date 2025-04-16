@@ -1,0 +1,14 @@
+.content {
+  grid-area: content;
+  background-color: var(--light-color);
+  color: var(--text-color);
+  display: grid;
+  grid-template-areas:
+    "top-left top-right"
+    "bottom-left bottom-right";
+  grid-template: 1fr 1fr;
+}
+
+.quadrant {
+  padding: 1rem;
+}

@@ -1,4 +1,5 @@
 import "./App.scss";
+import Content from "./components/Content/Content";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import Sidebar from "./components/Sidebar/Sidebar";
@@ -9,7 +10,7 @@ function App() {
       <div className="container">
         <Header />
         <Sidebar />
-        <div className="content">To do list will go here</div>
+        <Content />
         <Footer />
       </div>
     </>
