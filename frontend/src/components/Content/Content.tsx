@@ -1,30 +1,51 @@
-import { useEffect, useState } from "react";
-import { Item, ItemType } from "../../types";
+import { ItemType } from "../../types";
 import ItemList from "../ItemList/ItemList";
 import styles from "./Content.module.scss";
+import {
+  useCreateItem,
+  useGetItems,
+  useUpdateItem,
+} from "../../services/items-api";
 
 export default function Content() {
-  const [items, setItems] = useState<Item[]>([]);
+  const [createItemRequest] = useCreateItem();
+  const [updateItem] = useUpdateItem();
 
-  useEffect(() => {
-    setItems([
-      { id: 1, name: "Task 1", type: "urgentAndImportant", done: false },
-      { id: 2, name: "Task 2", type: "urgentAndNotImportant", done: true },
-      { id: 3, name: "Task 3", type: "notUrgentAndImportant", done: false },
-      { id: 4, name: "Task 4", type: "notUrgentAndNotImportant", done: true },
-    ]);
-  }, []);
+  const { data, error, loading, refetch } = useGetItems();
+
+  const items = data?.items || [];
 
   const createItem = (type: ItemType, name: string) => {
-    setItems([...items, { id: items.length + 1, name, type, done: false }]);
+    createItemRequest({
+      variables: {
+        createItemsInput: {
+          name,
+          type,
+          done: false,
+        },
+      },
+    }).then(() => {
+      refetch();
+    });
   };
-  const toggleItem = (type: ItemType, id: number) => {
-    setItems(
-      items.map((item) =>
-        item.id === id ? { ...item, done: !item.done } : item
-      )
-    );
+  const toggleItem = (id: number, done: boolean) => {
+    updateItem({
+      variables: {
+        updateItemsInput: {
+          id,
+          done,
+        },
+      },
+    });
   };
+
+  if (loading) {
+    return <div className={styles.loading}>Loading...</div>;
+  }
+
+  if (error) {
+    return <div className={styles.error}>Error: {error.message}</div>;
+  }
 
   return (
     <div className={styles.content}>

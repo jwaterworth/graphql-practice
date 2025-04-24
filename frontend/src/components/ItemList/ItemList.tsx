@@ -7,7 +7,7 @@ interface ItemListProps {
   createItem: (type: ItemType, name: string) => void;
   //   deleteItem: (id: number) => void;
   //   updateItem: (id: number, name: string) => void;
-  toggleItem: (type: ItemType, id: number) => void;
+  toggleItem: (id: number, done: boolean) => void;
 }
 
 export default function ItemList({
@@ -25,7 +25,7 @@ export default function ItemList({
           <input
             type="checkbox"
             checked={item.done}
-            onChange={() => toggleItem(type, item.id)}
+            onChange={() => toggleItem(item.id, !item.done)}
           />
           <span>{item.name}</span>
         </div>
