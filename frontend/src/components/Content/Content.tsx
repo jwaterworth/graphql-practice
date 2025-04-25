@@ -4,38 +4,25 @@ import styles from "./Content.module.scss";
 import {
   useCreateItem,
   useGetItems,
-  useUpdateItem,
+  useToggleItem,
 } from "../../services/items-api";
 
 export default function Content() {
   const [createItemRequest] = useCreateItem();
-  const [updateItem] = useUpdateItem();
+  const [toggleItemRequest] = useToggleItem();
 
   const { data, error, loading, refetch } = useGetItems();
 
   const items = data?.items || [];
 
   const createItem = (type: ItemType, name: string) => {
-    createItemRequest({
-      variables: {
-        createItemsInput: {
-          name,
-          type,
-          done: false,
-        },
-      },
-    }).then(() => {
+    createItemRequest(type, name).then(() => {
       refetch();
     });
   };
   const toggleItem = (id: number, done: boolean) => {
-    updateItem({
-      variables: {
-        updateItemsInput: {
-          id,
-          done,
-        },
-      },
+    toggleItemRequest(id, done).then(() => {
+      refetch();
     });
   };
 
