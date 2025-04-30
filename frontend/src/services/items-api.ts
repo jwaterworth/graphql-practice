@@ -30,6 +30,13 @@ mutation UpdateItem($updateItemsInput: UpdateItemDto!) {
     }
 }`
 
+const DELETE_ITEM = gql`
+mutation DeleteItem($id: Int!) {
+    deleteItem(id: $id) {
+        id
+    }
+}`
+
 export function useGetItems(): {
     loading: boolean, data: {
         items: Item[]
@@ -79,5 +86,23 @@ export function useToggleItem(): [(id: number, done: boolean) => Promise<unknown
             },
         });
     }, { data, loading, error }
+    ];
+}
+
+export function useDeleteItem(): [(id: number) => Promise<unknown>, {
+    loading: boolean,
+    error: ApolloError | undefined
+}] {
+    const [deleteItem, { loading, error }] = useMutation(DELETE_ITEM);
+
+    return [
+        (id: number) => {
+            return deleteItem({
+                variables: {
+                    id
+                },
+            });
+        },
+        { loading, error }
     ];
 }

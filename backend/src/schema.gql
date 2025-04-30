@@ -34,7 +34,7 @@ type Mutation {
   updateAuthor(id: Int!, firstName: String!, lastName: String!): Author!
   createItem(createItemsInput: CreateItemDto!): Item!
   updateItem(updateItemsInput: UpdateItemDto!): Item!
-  deleteItem(id: Float!): Item!
+  deleteItem(id: Int!): Item!
 }
 
 input CreateItemDto {

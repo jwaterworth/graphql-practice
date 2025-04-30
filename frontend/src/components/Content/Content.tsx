@@ -3,12 +3,14 @@ import ItemList from "../ItemList/ItemList";
 import styles from "./Content.module.scss";
 import {
   useCreateItem,
+  useDeleteItem,
   useGetItems,
   useToggleItem,
 } from "../../services/items-api";
 
 export default function Content() {
   const [createItemRequest] = useCreateItem();
+  const [deleteItemRequest] = useDeleteItem();
   const [toggleItemRequest] = useToggleItem();
 
   const { data, error, loading, refetch } = useGetItems();
@@ -17,6 +19,11 @@ export default function Content() {
 
   const createItem = (type: ItemType, name: string) => {
     createItemRequest(type, name).then(() => {
+      refetch();
+    });
+  };
+  const deleteItem = (id: number) => {
+    deleteItemRequest(id).then(() => {
       refetch();
     });
   };
@@ -40,6 +47,7 @@ export default function Content() {
         <ItemList
           type="urgentAndImportant"
           createItem={createItem}
+          deleteItem={deleteItem}
           toggleItem={toggleItem}
           title="Urgent and Important"
           items={items.filter((item) => item.type === "urgentAndImportant")}
@@ -49,6 +57,7 @@ export default function Content() {
         <ItemList
           type="urgentAndNotImportant"
           createItem={createItem}
+          deleteItem={deleteItem}
           toggleItem={toggleItem}
           title="Urgent and Not Important"
           items={items.filter((item) => item.type === "urgentAndNotImportant")}
@@ -58,6 +67,7 @@ export default function Content() {
         <ItemList
           type="notUrgentAndImportant"
           createItem={createItem}
+          deleteItem={deleteItem}
           toggleItem={toggleItem}
           title="Not Urgent and Important"
           items={items.filter((item) => item.type === "notUrgentAndImportant")}
@@ -67,6 +77,7 @@ export default function Content() {
         <ItemList
           type="notUrgentAndNotImportant"
           createItem={createItem}
+          deleteItem={deleteItem}
           toggleItem={toggleItem}
           title="Not Urgent and Not Important"
           items={items.filter(

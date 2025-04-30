@@ -5,7 +5,7 @@ interface ItemListProps {
   title: string;
   items: Item[];
   createItem: (type: ItemType, name: string) => void;
-  //   deleteItem: (id: number) => void;
+  deleteItem: (id: number) => void;
   //   updateItem: (id: number, name: string) => void;
   toggleItem: (id: number, done: boolean) => void;
 }
@@ -15,6 +15,7 @@ export default function ItemList({
   title,
   items,
   createItem,
+  deleteItem,
   toggleItem,
 }: ItemListProps) {
   return (
@@ -28,6 +29,7 @@ export default function ItemList({
             onChange={() => toggleItem(item.id, !item.done)}
           />
           <span>{item.name}</span>
+          <button onClick={() => deleteItem(item.id)}>Delete</button>
         </div>
       ))}
       <input
